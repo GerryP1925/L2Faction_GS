@@ -1,10 +1,10 @@
 package net.sf.l2j.util;
 
+import net.sf.l2j.commons.mmocore.IAcceptFilter;
+
 import java.nio.channels.SocketChannel;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import net.sf.l2j.commons.mmocore.IAcceptFilter;
 
 public class IPv4Filter implements IAcceptFilter, Runnable
 {

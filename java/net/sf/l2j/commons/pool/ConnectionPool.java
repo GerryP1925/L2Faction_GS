@@ -1,13 +1,11 @@
 package net.sf.l2j.commons.pool;
 
+import net.sf.l2j.Config;
+import net.sf.l2j.commons.logging.CLogger;
+import org.mariadb.jdbc.MariaDbPoolDataSource;
+
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import net.sf.l2j.commons.logging.CLogger;
-
-import net.sf.l2j.Config;
-
-import org.mariadb.jdbc.MariaDbPoolDataSource;
 
 public final class ConnectionPool
 {

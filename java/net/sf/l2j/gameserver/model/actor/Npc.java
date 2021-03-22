@@ -26,6 +26,7 @@ import net.sf.l2j.gameserver.enums.actors.NpcRace;
 import net.sf.l2j.gameserver.enums.actors.NpcSkillType;
 import net.sf.l2j.gameserver.enums.actors.NpcTalkCond;
 import net.sf.l2j.gameserver.enums.items.ShotType;
+import net.sf.l2j.gameserver.faction.EventListeners;
 import net.sf.l2j.gameserver.model.WorldObject;
 import net.sf.l2j.gameserver.model.actor.status.NpcStatus;
 import net.sf.l2j.gameserver.model.actor.template.NpcTemplate;
@@ -175,6 +176,8 @@ public class Npc extends Creature
 			scripts.get(0).notifyFirstTalk(this, player);
 		else
 			showChatWindow(player);
+
+		EventListeners.onInterract(player, this);
 	}
 	
 	@Override

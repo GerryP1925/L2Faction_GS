@@ -1,12 +1,12 @@
 package net.sf.l2j.gameserver.data;
 
+import net.sf.l2j.gameserver.skills.L2Skill;
+
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-
-import net.sf.l2j.gameserver.skills.L2Skill;
 
 public class SkillTable
 {

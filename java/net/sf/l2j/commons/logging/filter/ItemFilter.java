@@ -1,12 +1,11 @@
 package net.sf.l2j.commons.logging.filter;
 
-import java.util.logging.Filter;
-import java.util.logging.LogRecord;
-
 import net.sf.l2j.commons.util.ArraysUtil;
-
 import net.sf.l2j.gameserver.enums.items.EtcItemType;
 import net.sf.l2j.gameserver.model.item.instance.ItemInstance;
+
+import java.util.logging.Filter;
+import java.util.logging.LogRecord;
 
 public class ItemFilter implements Filter
 {

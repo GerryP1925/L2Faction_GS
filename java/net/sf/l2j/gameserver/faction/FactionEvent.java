@@ -1,22 +1,24 @@
 package net.sf.l2j.gameserver.faction;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ScheduledFuture;
 
 import net.sf.l2j.commons.logging.CLogger;
 import net.sf.l2j.commons.pool.ThreadPool;
 
 import net.sf.l2j.gameserver.data.sql.SpawnTable;
-import net.sf.l2j.gameserver.data.xml.MapRegionData;
 import net.sf.l2j.gameserver.data.xml.NpcData;
-import net.sf.l2j.gameserver.data.xml.MapRegionData.TeleportType;
 import net.sf.l2j.gameserver.model.World;
+import net.sf.l2j.gameserver.model.actor.Creature;
 import net.sf.l2j.gameserver.model.actor.Npc;
 import net.sf.l2j.gameserver.model.actor.Playable;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.actor.template.NpcTemplate;
 import net.sf.l2j.gameserver.model.location.Location;
 import net.sf.l2j.gameserver.model.spawn.Spawn;
+import net.sf.l2j.gameserver.network.serverpackets.ExShowScreenMessage;
+import net.sf.l2j.gameserver.skills.L2Skill;
 
 /**
  * @author An4rchy
@@ -24,7 +26,7 @@ import net.sf.l2j.gameserver.model.spawn.Spawn;
  */
 public abstract class FactionEvent implements Runnable
 {
-	private static final CLogger LOGGER = new CLogger(FactionEvent.class.getName());
+	protected final CLogger LOGGER = new CLogger(FactionEvent.class.getName());
 	
 	private int _id;
 	private String _name;
@@ -32,7 +34,7 @@ public abstract class FactionEvent implements Runnable
 	protected EventState _state;
 	protected int _teamOneScore, _teamTwoScore;
 	protected ArrayList<EventPlayerData> _participants;
-	protected ArrayList<ScheduledFuture<?>> _eventTasks;
+	private HashMap<String, ScheduledFuture<?>> _eventTasks;
 	protected ArrayList<Npc> _spawns;
 	
 	public FactionEvent(int id, String name, int duration)
@@ -42,23 +44,42 @@ public abstract class FactionEvent implements Runnable
 		_duration = duration;
 		_state = EventState.INACTIVE;
 		_participants = new ArrayList<>();
-		_eventTasks = new ArrayList<>();
+		_eventTasks = new HashMap<>();
 		_spawns = new ArrayList<>();
 	}
-	
+
+	@Override
+	public void run()
+	{
+		if (getEventPlayerInfo() != null)
+			registerTask("Info", () -> sendInformation(), 1000, 1000);
+		announceEvent();
+	}
+
+	protected void sendInformation()
+	{
+		ExShowScreenMessage msg = new ExShowScreenMessage(getEventPlayerInfo(), 1000, ExShowScreenMessage.SMPOS.BOTTOM_RIGHT, false);
+		for (EventPlayerData player : _participants)
+			player.getActingPlayer().sendPacket(msg);
+	}
+
+	protected String getEventPlayerInfo()
+	{
+		return null;
+	}
+
 	protected void announceEvent()
 	{
 		World.announceToOnlinePlayers("Next Event - "+getName());
-		World.announceToOnlinePlayers("Event Duration - "+getDuration()+" minutes");
 	}
 	
 	protected void endEvent()
 	{
 		_state = EventState.INACTIVE;
-		
+
+		World.announceToOnlinePlayers(getName()+" Event is over!");
+
 		// TODO mini
-		for (EventPlayerData player : _participants)
-			player.getActingPlayer().teleportTo(MapRegionData.getInstance().getLocationToTeleport(player.getActingPlayer(), TeleportType.TOWN), 20);
 		_participants.clear();
 		EventManager.getInstance().clearFactionChanges();
 		for (Npc npc : _spawns)
@@ -72,8 +93,7 @@ public abstract class FactionEvent implements Runnable
 			npc.deleteMe();
 		}
 		_spawns.clear();
-		for (ScheduledFuture<?> task : _eventTasks)
-			task.cancel(true);
+		_eventTasks.values().forEach(t -> t.cancel(false));
 		_eventTasks.clear();
 		_teamOneScore = 0;
 		_teamTwoScore = 0;
@@ -118,23 +138,25 @@ public abstract class FactionEvent implements Runnable
 		
 		return null;
 	}
-	
-	protected void sendInformation()
+
+	protected void cancelTask(String name)
 	{
-		
+		ScheduledFuture<?> task = _eventTasks.get(name);
+		if (task != null)
+			task.cancel(false);
+	}
+
+	protected void registerTask(String name, Runnable r, long delay)
+	{
+		registerTask(name, r, delay, 0);
 	}
 	
-	protected void registerTask(Runnable r, long delay)
-	{
-		registerTask(r, delay, 0);
-	}
-	
-	protected void registerTask(Runnable r, long initial, long repeat)
+	protected void registerTask(String name, Runnable r, long initial, long repeat)
 	{
 		if (repeat > 0)
-			_eventTasks.add(ThreadPool.scheduleAtFixedRate(r, initial, repeat));
+			_eventTasks.put(name, ThreadPool.scheduleAtFixedRate(r, initial, repeat));
 		else
-			_eventTasks.add(ThreadPool.schedule(r, initial));
+			_eventTasks.put(name, ThreadPool.schedule(r, initial));
 	}
 	
 	public synchronized void addParticipant(Player player)
@@ -160,7 +182,12 @@ public abstract class FactionEvent implements Runnable
 		
 		return null;
 	}
-	
+
+	public boolean isEventNpc(Npc npc)
+	{
+		return _spawns.contains(npc);
+	}
+
 	public int getId()
 	{
 		return _id;
@@ -180,11 +207,49 @@ public abstract class FactionEvent implements Runnable
 	{
 		return _state;
 	}
-	
+
+	public void onRespawnButton(Player player)
+	{ }
+
+	public boolean allowRecall()
+	{
+		return true;
+	}
+
+	public void onRecall(Player player)
+	{
+		removeParticipant(player);
+	}
+
+	public void onRespawn(Player player)
+	{ }
+
+	public void onDeath(Player victim, Playable killer)
+	{ }
+
+	public void onInterract(Player player, Npc npc)
+	{ }
+
+	public void onCast(Player player, Creature target, L2Skill skill)
+	{ }
+
+	public void onCastStop(Player player, L2Skill skill)
+	{ }
+
+	public boolean canAttack(Playable attacker, Playable victim)
+	{
+		return true;
+	}
+
+	public boolean showRespawnButton()
+	{
+		return true;
+	}
+
+	public boolean showToTownButton()
+	{
+		return true;
+	}
+
 	public abstract EventType getType();
-	public abstract boolean canAttack(Playable attacker, Playable victim);
-	public abstract boolean showRespawnButton();
-	public abstract boolean showToTownButton();
-	public abstract void onRespawnButton(Player player);
-	protected abstract void endRewards();
 }

@@ -4,32 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sf.l2j.gameserver.enums.skills.SkillTargetType;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetAlly;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetArea;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetAreaCorpseMob;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetAreaSummon;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetAura;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetAuraUndead;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetBehindAura;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetClan;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetCorpseAlly;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetCorpseMob;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetCorpsePet;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetCorpsePlayer;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetEnemySummon;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetFrontArea;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetFrontAura;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetGround;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetHoly;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetOne;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetOwnerPet;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetParty;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetPartyMember;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetPartyOther;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetSelf;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetSummon;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetUndead;
-import net.sf.l2j.gameserver.handler.targethandlers.TargetUnlockable;
+import net.sf.l2j.gameserver.handler.targethandlers.*;
 
 public class TargetHandler
 {
@@ -63,6 +38,7 @@ public class TargetHandler
 		registerHandler(new TargetSummon());
 		registerHandler(new TargetUndead());
 		registerHandler(new TargetUnlockable());
+		registerHandler(new TargetFactionFlag());
 	}
 	
 	private void registerHandler(ITargetHandler handler)

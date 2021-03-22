@@ -1,10 +1,6 @@
 package net.sf.l2j.commons.io;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PushbackInputStream;
-import java.io.Reader;
+import java.io.*;
 
 /**
  * Generic unicode textreader, which will use BOM mark to identify the encoding to be used. If BOM is not found then use a given default encoding. System default is used if: BOM mark is not found and defaultEnc is NULL Usage pattern: String defaultEnc = "ISO-8859-1"; // or NULL to use system default

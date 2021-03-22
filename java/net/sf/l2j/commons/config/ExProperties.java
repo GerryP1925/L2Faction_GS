@@ -1,14 +1,13 @@
 package net.sf.l2j.commons.config;
 
+import net.sf.l2j.commons.logging.CLogger;
+import net.sf.l2j.gameserver.model.holder.IntIntHolder;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
-import net.sf.l2j.commons.logging.CLogger;
-
-import net.sf.l2j.gameserver.model.holder.IntIntHolder;
 
 public class ExProperties extends Properties
 {

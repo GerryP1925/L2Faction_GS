@@ -42,6 +42,12 @@ public class L2SkillTeleport extends L2Skill
 			// Check invalid states.
 			if (activeChar.isAfraid() || ((Player) activeChar).isInOlympiadMode() || activeChar.isInsideZone(ZoneId.BOSS))
 				return;
+
+			if (!EventListeners.canRecall((Player) activeChar))
+			{
+				((Player)activeChar).sendMessage("You may not recall during this event.");
+				return;
+			}
 		}
 		
 		boolean bsps = activeChar.isChargedShot(ShotType.BLESSED_SPIRITSHOT);

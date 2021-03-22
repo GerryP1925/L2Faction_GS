@@ -1,16 +1,14 @@
 package net.sf.l2j.gameserver.data.xml;
 
+import net.sf.l2j.commons.data.xml.IXmlReader;
+import net.sf.l2j.commons.random.Rnd;
+import net.sf.l2j.gameserver.model.Fish;
+import org.w3c.dom.Document;
+
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import net.sf.l2j.commons.data.xml.IXmlReader;
-import net.sf.l2j.commons.random.Rnd;
-
-import net.sf.l2j.gameserver.model.Fish;
-
-import org.w3c.dom.Document;
 
 /**
  * This class loads and stores {@link Fish} infos.<br>

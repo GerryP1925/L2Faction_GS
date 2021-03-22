@@ -1,10 +1,6 @@
 package net.sf.l2j.gameserver.data.manager;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.sf.l2j.commons.data.StatSet;
-
 import net.sf.l2j.gameserver.idfactory.IdFactory;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Boat;
@@ -12,6 +8,9 @@ import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.actor.template.CreatureTemplate;
 import net.sf.l2j.gameserver.model.location.BoatLocation;
 import net.sf.l2j.gameserver.network.serverpackets.L2GameServerPacket;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BoatManager
 {

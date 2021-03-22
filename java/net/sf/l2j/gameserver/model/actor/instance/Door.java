@@ -9,6 +9,7 @@ import net.sf.l2j.gameserver.data.xml.DoorData;
 import net.sf.l2j.gameserver.enums.DoorType;
 import net.sf.l2j.gameserver.enums.OpenType;
 import net.sf.l2j.gameserver.enums.SiegeSide;
+import net.sf.l2j.gameserver.faction.EventListeners;
 import net.sf.l2j.gameserver.geoengine.GeoEngine;
 import net.sf.l2j.gameserver.geoengine.geodata.IGeoObject;
 import net.sf.l2j.gameserver.model.actor.Creature;
@@ -145,6 +146,9 @@ public class Door extends Creature implements IGeoObject
 			
 			return true;
 		}
+
+		if (EventListeners.canAttackDoor((Playable)attacker, getDoorId()))
+			return true;
 		
 		return false;
 	}
@@ -169,8 +173,8 @@ public class Door extends Creature implements IGeoObject
 	@Override
 	public void reduceCurrentHp(double damage, Creature attacker, boolean awake, boolean isDOT, L2Skill skill)
 	{
-		// HPs can only be reduced during sieges.
-		if (_castle != null && _castle.getSiege().isInProgress())
+		// HPs can only be reduced during sieges or fortress siege faction event.
+		if ((_castle != null && _castle.getSiege().isInProgress()) || (attacker instanceof Playable && EventListeners.canAttackDoor((Playable) attacker, getDoorId())))
 		{
 			// SiegeSummon can attack both Walls and Doors (excepted Swoop Cannon - anti-infantery summon).
 			if (attacker instanceof SiegeSummon && ((SiegeSummon) attacker).getNpcId() == SiegeSummon.SWOOP_CANNON_ID)

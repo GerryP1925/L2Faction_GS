@@ -1,10 +1,10 @@
 package net.sf.l2j.commons.logging.formatter;
 
+import net.sf.l2j.commons.logging.MasterFormatter;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.LogRecord;
-
-import net.sf.l2j.commons.logging.MasterFormatter;
 
 public class ConsoleLogFormatter extends MasterFormatter
 {

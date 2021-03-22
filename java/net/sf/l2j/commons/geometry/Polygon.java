@@ -1,11 +1,10 @@
 package net.sf.l2j.commons.geometry;
 
+import net.sf.l2j.commons.random.Rnd;
+import net.sf.l2j.gameserver.model.location.Location;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import net.sf.l2j.commons.random.Rnd;
-
-import net.sf.l2j.gameserver.model.location.Location;
 
 /**
  * @author Hasha

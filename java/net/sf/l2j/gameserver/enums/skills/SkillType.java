@@ -1,22 +1,10 @@
 package net.sf.l2j.gameserver.enums.skills;
 
-import java.lang.reflect.Constructor;
-
 import net.sf.l2j.commons.data.StatSet;
-
 import net.sf.l2j.gameserver.skills.L2Skill;
-import net.sf.l2j.gameserver.skills.l2skills.L2SkillAppearance;
-import net.sf.l2j.gameserver.skills.l2skills.L2SkillChargeDmg;
-import net.sf.l2j.gameserver.skills.l2skills.L2SkillCreateItem;
-import net.sf.l2j.gameserver.skills.l2skills.L2SkillDefault;
-import net.sf.l2j.gameserver.skills.l2skills.L2SkillDrain;
-import net.sf.l2j.gameserver.skills.l2skills.L2SkillSeed;
-import net.sf.l2j.gameserver.skills.l2skills.L2SkillSiegeFlag;
-import net.sf.l2j.gameserver.skills.l2skills.L2SkillSignet;
-import net.sf.l2j.gameserver.skills.l2skills.L2SkillSignetCasttime;
-import net.sf.l2j.gameserver.skills.l2skills.L2SkillSpawn;
-import net.sf.l2j.gameserver.skills.l2skills.L2SkillSummon;
-import net.sf.l2j.gameserver.skills.l2skills.L2SkillTeleport;
+import net.sf.l2j.gameserver.skills.l2skills.*;
+
+import java.lang.reflect.Constructor;
 
 public enum SkillType
 {
@@ -141,7 +129,8 @@ public enum SkillType
 	// unimplemented
 	NOTDONE,
 	
-	AUTO_POTION;
+	AUTO_POTION,
+	CAPTURE_FORT;
 	
 	private final Class<? extends L2Skill> _class;
 	

@@ -1,5 +1,8 @@
 package net.sf.l2j.commons.data;
 
+import net.sf.l2j.commons.lang.StringUtil;
+import net.sf.l2j.commons.math.MathUtil;
+
 import java.util.AbstractList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,9 +11,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import net.sf.l2j.commons.lang.StringUtil;
-import net.sf.l2j.commons.math.MathUtil;
 
 public class Pagination<A> extends AbstractList<A>
 {

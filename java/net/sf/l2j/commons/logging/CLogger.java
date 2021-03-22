@@ -1,10 +1,10 @@
 package net.sf.l2j.commons.logging;
 
+import net.sf.l2j.commons.lang.StringReplacer;
+
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-
-import net.sf.l2j.commons.lang.StringReplacer;
 
 /**
  * Wraps the regular {@link Logger} to handle slf4j features, notably {} replacement.<br>

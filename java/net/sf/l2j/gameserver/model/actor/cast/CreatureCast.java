@@ -388,6 +388,9 @@ public class CreatureCast<T extends Creature>
 	 */
 	public final void stop()
 	{
+		if (isCastingNow() && _skill != null && _actor instanceof Player)
+			EventListeners.onCastStop((Player) _actor, _skill);
+
 		if (_actor.getFusionSkill() != null)
 			_actor.getFusionSkill().onCastAbort();
 		

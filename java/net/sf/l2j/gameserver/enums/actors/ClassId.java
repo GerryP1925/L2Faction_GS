@@ -1,8 +1,8 @@
 package net.sf.l2j.gameserver.enums.actors;
 
-import java.util.EnumSet;
-
 import net.sf.l2j.gameserver.model.actor.Player;
+
+import java.util.EnumSet;
 
 /**
  * This class defines all classes (ex : human fighter, darkFighter...) that a player can chose.

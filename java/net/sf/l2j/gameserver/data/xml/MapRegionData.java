@@ -1,9 +1,6 @@
 package net.sf.l2j.gameserver.data.xml;
 
-import java.nio.file.Path;
-
 import net.sf.l2j.commons.data.xml.IXmlReader;
-
 import net.sf.l2j.gameserver.data.manager.CastleManager;
 import net.sf.l2j.gameserver.data.manager.ClanHallManager;
 import net.sf.l2j.gameserver.data.manager.ZoneManager;
@@ -18,9 +15,10 @@ import net.sf.l2j.gameserver.model.entity.Castle;
 import net.sf.l2j.gameserver.model.entity.Siege;
 import net.sf.l2j.gameserver.model.location.Location;
 import net.sf.l2j.gameserver.model.zone.type.TownZone;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
+
+import java.nio.file.Path;
 
 /**
  * This class loads and stores map regions values under a 2D int array.<br>

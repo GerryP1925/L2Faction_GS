@@ -2,6 +2,8 @@ package net.sf.l2j.gameserver.handler.chathandlers;
 
 import net.sf.l2j.gameserver.enums.FloodProtector;
 import net.sf.l2j.gameserver.enums.SayType;
+import net.sf.l2j.gameserver.faction.EventManager;
+import net.sf.l2j.gameserver.faction.mini.SimonSaysMini;
 import net.sf.l2j.gameserver.handler.IChatHandler;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
@@ -24,6 +26,9 @@ public class ChatAll implements IChatHandler
 			knownPlayer.sendPacket(cs);
 		
 		player.sendPacket(cs);
+
+		if (EventManager.getInstance().getActiveEvent() instanceof SimonSaysMini && EventManager.getInstance().getActiveEvent().getParticipant(player) != null)
+			((SimonSaysMini)EventManager.getInstance().getActiveEvent()).checkPlayerInput(player, text);
 	}
 	
 	@Override

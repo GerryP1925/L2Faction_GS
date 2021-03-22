@@ -1,9 +1,9 @@
 package net.sf.l2j.commons.logging.formatter;
 
-import java.util.logging.LogRecord;
-
 import net.sf.l2j.commons.lang.StringUtil;
 import net.sf.l2j.commons.logging.MasterFormatter;
+
+import java.util.logging.LogRecord;
 
 public class ChatLogFormatter extends MasterFormatter
 {

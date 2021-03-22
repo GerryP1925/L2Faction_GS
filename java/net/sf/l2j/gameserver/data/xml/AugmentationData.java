@@ -1,24 +1,18 @@
 package net.sf.l2j.gameserver.data.xml;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-
+import net.sf.l2j.Config;
 import net.sf.l2j.commons.data.StatSet;
 import net.sf.l2j.commons.data.xml.IXmlReader;
 import net.sf.l2j.commons.random.Rnd;
-
-import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.enums.skills.Stats;
 import net.sf.l2j.gameserver.model.Augmentation;
 import net.sf.l2j.gameserver.model.holder.IntIntHolder;
 import net.sf.l2j.gameserver.network.clientpackets.AbstractRefinePacket;
 import net.sf.l2j.gameserver.skills.L2Skill;
-
 import org.w3c.dom.Document;
+
+import java.nio.file.Path;
+import java.util.*;
 
 /**
  * This class loads and stores :

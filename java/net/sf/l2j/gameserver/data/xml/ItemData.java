@@ -1,16 +1,15 @@
 package net.sf.l2j.gameserver.data.xml;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import net.sf.l2j.commons.logging.CLogger;
-
 import net.sf.l2j.gameserver.data.DocumentItem;
 import net.sf.l2j.gameserver.model.item.kind.Armor;
 import net.sf.l2j.gameserver.model.item.kind.EtcItem;
 import net.sf.l2j.gameserver.model.item.kind.Item;
 import net.sf.l2j.gameserver.model.item.kind.Weapon;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class loads and stores all {@link Item} templates.

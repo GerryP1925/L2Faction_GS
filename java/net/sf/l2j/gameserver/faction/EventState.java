@@ -10,5 +10,6 @@ public enum EventState
 	PAUSING,
 	REWARDING,
 	RUNNING,
+	REGISTERING,
 	INACTIVE
 }

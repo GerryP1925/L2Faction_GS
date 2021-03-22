@@ -1,19 +1,17 @@
 package net.sf.l2j.gameserver.data;
 
+import net.sf.l2j.commons.data.StatSet;
+import net.sf.l2j.gameserver.enums.skills.SkillType;
+import net.sf.l2j.gameserver.skills.L2Skill;
+import net.sf.l2j.gameserver.skills.conditions.Condition;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-
-import net.sf.l2j.commons.data.StatSet;
-
-import net.sf.l2j.gameserver.enums.skills.SkillType;
-import net.sf.l2j.gameserver.skills.L2Skill;
-import net.sf.l2j.gameserver.skills.conditions.Condition;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 
 public final class DocumentSkill extends DocumentBase
 {

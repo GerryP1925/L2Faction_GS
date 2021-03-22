@@ -1,17 +1,15 @@
 package net.sf.l2j.gameserver.data.xml;
 
+import net.sf.l2j.commons.data.StatSet;
+import net.sf.l2j.commons.data.xml.IXmlReader;
+import net.sf.l2j.gameserver.idfactory.IdFactory;
+import net.sf.l2j.gameserver.model.actor.instance.StaticObject;
+import org.w3c.dom.Document;
+
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.sf.l2j.commons.data.StatSet;
-import net.sf.l2j.commons.data.xml.IXmlReader;
-
-import net.sf.l2j.gameserver.idfactory.IdFactory;
-import net.sf.l2j.gameserver.model.actor.instance.StaticObject;
-
-import org.w3c.dom.Document;
 
 /**
  * This class loads, stores and spawns {@link StaticObject}s.

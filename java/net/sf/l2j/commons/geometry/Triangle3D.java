@@ -1,7 +1,6 @@
 package net.sf.l2j.commons.geometry;
 
 import net.sf.l2j.commons.random.Rnd;
-
 import net.sf.l2j.gameserver.model.location.Location;
 
 /**

@@ -29,6 +29,8 @@ public class RessurectionTask implements Runnable
 		{
 			player.doRevive();
 			player.getStatus().setCpHpMp(player.getStatus().getMaxCp(), player.getStatus().getMaxHp(), player.getStatus().getMaxMp());
+			if (EventManager.getInstance().getActiveEvent() instanceof MapEvent)
+				((MapEvent)EventManager.getInstance().getActiveEvent()).onRespawn(player);
 			if (player.getFaction() == 1)
 				player.teleportTo(_location1, 50);
 			else

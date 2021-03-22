@@ -1,19 +1,8 @@
 package net.sf.l2j.gameserver.data.manager;
 
-import java.lang.reflect.Constructor;
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import net.sf.l2j.commons.data.xml.IXmlReader;
 import net.sf.l2j.commons.lang.StringUtil;
 import net.sf.l2j.commons.pool.ConnectionPool;
-
 import net.sf.l2j.gameserver.enums.SpawnType;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.WorldObject;
@@ -28,10 +17,15 @@ import net.sf.l2j.gameserver.model.zone.type.BossZone;
 import net.sf.l2j.gameserver.model.zone.type.subtype.SpawnZoneType;
 import net.sf.l2j.gameserver.model.zone.type.subtype.ZoneType;
 import net.sf.l2j.gameserver.network.serverpackets.L2GameServerPacket;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+
+import java.lang.reflect.Constructor;
+import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.*;
 
 /**
  * Loads and stores zones, based on their {@link ZoneType}.

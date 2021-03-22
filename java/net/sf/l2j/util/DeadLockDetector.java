@@ -1,16 +1,11 @@
 package net.sf.l2j.util;
 
-import java.lang.management.LockInfo;
-import java.lang.management.ManagementFactory;
-import java.lang.management.MonitorInfo;
-import java.lang.management.ThreadInfo;
-import java.lang.management.ThreadMXBean;
-
-import net.sf.l2j.commons.logging.CLogger;
-
 import net.sf.l2j.Config;
+import net.sf.l2j.commons.logging.CLogger;
 import net.sf.l2j.gameserver.Shutdown;
 import net.sf.l2j.gameserver.model.World;
+
+import java.lang.management.*;
 
 /**
  * Thread to check for deadlocked threads.

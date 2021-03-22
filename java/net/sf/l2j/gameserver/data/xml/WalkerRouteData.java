@@ -1,17 +1,15 @@
 package net.sf.l2j.gameserver.data.xml;
 
+import net.sf.l2j.commons.data.xml.IXmlReader;
+import net.sf.l2j.gameserver.model.location.WalkerLocation;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import net.sf.l2j.commons.data.xml.IXmlReader;
-
-import net.sf.l2j.gameserver.model.location.WalkerLocation;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 
 /**
  * This class loads and stores routes for Walker NPCs, under a List of {@link WalkerLocation} ; the key being the npcId.

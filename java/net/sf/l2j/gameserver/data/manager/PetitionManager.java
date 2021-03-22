@@ -1,5 +1,15 @@
 package net.sf.l2j.gameserver.data.manager;
 
+import net.sf.l2j.commons.logging.CLogger;
+import net.sf.l2j.commons.pool.ConnectionPool;
+import net.sf.l2j.gameserver.data.xml.AdminData;
+import net.sf.l2j.gameserver.enums.PetitionType;
+import net.sf.l2j.gameserver.enums.SayType;
+import net.sf.l2j.gameserver.enums.petitions.PetitionState;
+import net.sf.l2j.gameserver.model.Petition;
+import net.sf.l2j.gameserver.model.actor.Player;
+import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,17 +18,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import net.sf.l2j.commons.logging.CLogger;
-import net.sf.l2j.commons.pool.ConnectionPool;
-
-import net.sf.l2j.gameserver.data.xml.AdminData;
-import net.sf.l2j.gameserver.enums.PetitionType;
-import net.sf.l2j.gameserver.enums.SayType;
-import net.sf.l2j.gameserver.enums.petitions.PetitionState;
-import net.sf.l2j.gameserver.model.Petition;
-import net.sf.l2j.gameserver.model.actor.Player;
-import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
 
 /**
  * Store all existing {@link Petition}s.<br>

@@ -32,12 +32,7 @@ public class Escape implements IUserCommandHandler
 		if (player.isGM())
 			player.getAI().tryToCast(player, 2100, 1);
 		else
-		{
-			player.sendPacket(new PlaySound("systemmsg_e.809"));
-			player.sendPacket(SystemMessageId.STUCK_TRANSPORT_IN_FIVE_MINUTES);
-			
 			player.getAI().tryToCast(player, 2099, 1);
-		}
 	}
 	
 	@Override

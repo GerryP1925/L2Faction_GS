@@ -1,17 +1,16 @@
 package net.sf.l2j.gameserver.data.manager;
 
+import net.sf.l2j.commons.data.StatSet;
+import net.sf.l2j.commons.logging.CLogger;
+import net.sf.l2j.commons.pool.ConnectionPool;
+import net.sf.l2j.gameserver.data.xml.NpcData;
+import net.sf.l2j.gameserver.model.actor.instance.GrandBoss;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.sf.l2j.commons.data.StatSet;
-import net.sf.l2j.commons.logging.CLogger;
-import net.sf.l2j.commons.pool.ConnectionPool;
-
-import net.sf.l2j.gameserver.data.xml.NpcData;
-import net.sf.l2j.gameserver.model.actor.instance.GrandBoss;
 
 /**
  * This class handles the status of all {@link GrandBoss}es.

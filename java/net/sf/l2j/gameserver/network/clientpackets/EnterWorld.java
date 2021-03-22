@@ -257,6 +257,8 @@ public class EnterWorld extends L2GameClientPacket
 			player.getAppearance().setNameColor(Config.FACTION_ONE_COLOR);
 		else if (player.getFaction() == 2)
 			player.getAppearance().setNameColor(Config.FACTION_TWO_COLOR);
+
+		player.resetLinePackets(); // precaution because i don't have a clue what ncsoft did to save primitive packets after logout
 		
 		player.sendPacket(ActionFailed.STATIC_PACKET);
 	}

@@ -2,7 +2,6 @@ package net.sf.l2j.gameserver.model.item.kind;
 
 import net.sf.l2j.commons.data.StatSet;
 import net.sf.l2j.commons.random.Rnd;
-
 import net.sf.l2j.gameserver.enums.ScriptEventType;
 import net.sf.l2j.gameserver.enums.items.WeaponType;
 import net.sf.l2j.gameserver.handler.ISkillHandler;

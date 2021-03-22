@@ -1,19 +1,17 @@
 package net.sf.l2j.gameserver.data.xml;
 
+import net.sf.l2j.commons.data.StatSet;
+import net.sf.l2j.commons.data.xml.IXmlReader;
+import net.sf.l2j.gameserver.model.actor.Player;
+import net.sf.l2j.gameserver.model.item.Henna;
+import org.w3c.dom.Document;
+
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import net.sf.l2j.commons.data.StatSet;
-import net.sf.l2j.commons.data.xml.IXmlReader;
-
-import net.sf.l2j.gameserver.model.actor.Player;
-import net.sf.l2j.gameserver.model.item.Henna;
-
-import org.w3c.dom.Document;
 
 /**
  * This class loads and stores {@link Henna}s infos. Hennas are called "dye" ingame.

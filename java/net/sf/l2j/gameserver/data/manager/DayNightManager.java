@@ -1,13 +1,12 @@
 package net.sf.l2j.gameserver.data.manager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.sf.l2j.commons.logging.CLogger;
-
 import net.sf.l2j.gameserver.model.actor.Npc;
 import net.sf.l2j.gameserver.model.spawn.Spawn;
 import net.sf.l2j.gameserver.taskmanager.GameTimeTaskManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DayNightManager
 {

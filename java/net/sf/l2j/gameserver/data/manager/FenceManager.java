@@ -1,13 +1,12 @@
 package net.sf.l2j.gameserver.data.manager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.sf.l2j.commons.logging.CLogger;
-
 import net.sf.l2j.gameserver.geoengine.GeoEngine;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.instance.Fence;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Fence table to manage {@link Fence} spawn/despawn.

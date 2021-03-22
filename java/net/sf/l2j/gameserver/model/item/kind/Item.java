@@ -1,20 +1,7 @@
 package net.sf.l2j.gameserver.model.item.kind;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import net.sf.l2j.commons.data.StatSet;
-
-import net.sf.l2j.gameserver.enums.items.ActionType;
-import net.sf.l2j.gameserver.enums.items.ArmorType;
-import net.sf.l2j.gameserver.enums.items.CrystalType;
-import net.sf.l2j.gameserver.enums.items.EtcItemType;
-import net.sf.l2j.gameserver.enums.items.ItemType;
-import net.sf.l2j.gameserver.enums.items.MaterialType;
-import net.sf.l2j.gameserver.enums.items.WeaponType;
+import net.sf.l2j.gameserver.enums.items.*;
 import net.sf.l2j.gameserver.model.WorldObject;
 import net.sf.l2j.gameserver.model.actor.Creature;
 import net.sf.l2j.gameserver.model.actor.Player;
@@ -27,6 +14,8 @@ import net.sf.l2j.gameserver.scripting.Quest;
 import net.sf.l2j.gameserver.skills.basefuncs.Func;
 import net.sf.l2j.gameserver.skills.basefuncs.FuncTemplate;
 import net.sf.l2j.gameserver.skills.conditions.Condition;
+
+import java.util.*;
 
 /**
  * This container contains all informations concerning an item (weapon, armor, etc).

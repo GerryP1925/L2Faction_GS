@@ -1,14 +1,14 @@
 package net.sf.l2j.gameserver.data.cache;
 
+import net.sf.l2j.commons.io.UnicodeReader;
+import net.sf.l2j.commons.logging.CLogger;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.sf.l2j.commons.io.UnicodeReader;
-import net.sf.l2j.commons.logging.CLogger;
 
 /**
  * A cache storing HTMs content.<br>

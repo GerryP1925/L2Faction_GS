@@ -75,6 +75,7 @@ import net.sf.l2j.gameserver.enums.items.WeaponType;
 import net.sf.l2j.gameserver.enums.skills.EffectFlag;
 import net.sf.l2j.gameserver.enums.skills.EffectType;
 import net.sf.l2j.gameserver.enums.skills.Stats;
+import net.sf.l2j.gameserver.faction.EventListeners;
 import net.sf.l2j.gameserver.faction.EventManager;
 import net.sf.l2j.gameserver.faction.map.MapEvent;
 import net.sf.l2j.gameserver.geoengine.GeoEngine;
@@ -386,7 +387,7 @@ public final class Player extends Playable
 	private ScheduledFuture<?> _chargeTask;
 	
 	private AccessLevel _accessLevel;
-	
+
 	private Location _enterWorld;
 	private final Map<String, ExServerPrimitive> _debug = new HashMap<>();
 	
@@ -454,6 +455,8 @@ public final class Player extends Playable
 	private int _faction;
 	
 	private int _bufferTarget = 1;
+
+	private HashMap<String, ExServerPrimitive> _linePackets = new HashMap<>();
 	
 	/**
 	 * Constructor of Player (use Creature constructor).
@@ -2593,12 +2596,11 @@ public final class Player extends Playable
 			if (isFakeDeath())
 				stopFakeDeath(true);
 		}
-		
+
+		EventListeners.onDeath(this, killer);
+
 		if (killer != null)
 		{
-			if (killer instanceof Playable && EventManager.getInstance().getActiveEvent() instanceof MapEvent)
-				((MapEvent)EventManager.getInstance().getActiveEvent()).onKill((Playable) killer, this);
-			
 			final Player pk = killer.getActingPlayer();
 			
 			// Clear resurrect xp calculation
@@ -2627,6 +2629,8 @@ public final class Player extends Playable
 			if (Config.ALLOW_DELEVEL && (!hasSkill(L2Skill.SKILL_LUCKY) || getStatus().getLevel() > 9))
 				applyDeathPenalty(pk != null && getClan() != null && pk.getClan() != null && (getClan().isAtWarWith(pk.getClanId()) || pk.getClan().isAtWarWith(getClanId())), pk != null);
 		}
+
+
 		
 		// Unsummon Cubics
 		_cubicList.stopCubics(false);
@@ -3858,6 +3862,11 @@ public final class Player extends Playable
 	public final void setEnterWorldLoc(int x, int y, int z)
 	{
 		_enterWorld = new Location(x, y, z);
+	}
+
+	public Location getEnterWorldLoc()
+	{
+		return _enterWorld;
 	}
 	
 	public final ExServerPrimitive getDebugPacket(String name)
@@ -7043,5 +7052,26 @@ public final class Player extends Playable
 	public void setBufferTarget(int val)
 	{
 		_bufferTarget = val;
+	}
+
+	public ExServerPrimitive getLinePacket(String name)
+	{
+		return _linePackets.get(name);
+	}
+
+	public void addLinePacket(String name, ExServerPrimitive packet)
+	{
+		_linePackets.put(name, packet);
+	}
+
+	public void resetLinePackets()
+	{
+		for (ExServerPrimitive packet : _linePackets.values())
+		{
+			packet.reset();
+			packet.sendTo(this);
+		}
+
+		_linePackets.clear();
 	}
 }

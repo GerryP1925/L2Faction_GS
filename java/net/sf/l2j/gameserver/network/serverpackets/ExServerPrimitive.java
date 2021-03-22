@@ -24,9 +24,9 @@ public class ExServerPrimitive extends L2GameServerPacket
 	
 	private final String _name;
 	
-	private final int _x;
-	private final int _y;
-	private final int _z;
+	private int _x;
+	private int _y;
+	private int _z;
 	private final int _index;
 	
 	private int _size = 0;
@@ -69,7 +69,14 @@ public class ExServerPrimitive extends L2GameServerPacket
 		_z = parent._z;
 		_index = parent._index + 1;
 	}
-	
+
+	public void setEnterWorldLoc(Location enterWorldLoc)
+	{
+		_x = enterWorldLoc.getX();
+		_y = enterWorldLoc.getY();
+		_z = enterWorldLoc.getZ();
+	}
+
 	/**
 	 * Add a point to the {@link ExServerPrimitive} ; create next {@link ExServerPrimitive} if out of capacity.
 	 * @param point : Added {@link Point}.
@@ -399,7 +406,20 @@ public class ExServerPrimitive extends L2GameServerPacket
 		for (Line l : esp._lines)
 			addLine(l);
 	}
-	
+
+	/**
+	 * Updates the color of all lines in this packet and nested packets.
+	 * @param color : The new color to set.
+	 */
+	public void updateColorForAllLines(Color color)
+	{
+		for (Line l : _lines)
+			l.setColor(color);
+
+		if (_next != null)
+			_next.updateColorForAllLines(color);
+	}
+
 	/**
 	 * Reset both lines and points {@link List}s.
 	 */
@@ -497,7 +517,7 @@ public class ExServerPrimitive extends L2GameServerPacket
 	private static class Point
 	{
 		protected final String _name;
-		private final int _color;
+		private int _color;
 		private final boolean _isNameColored;
 		private final int _x;
 		private final int _y;
@@ -542,7 +562,12 @@ public class ExServerPrimitive extends L2GameServerPacket
 		{
 			return _z;
 		}
-		
+
+		public void setColor(Color color)
+		{
+			_color = color.getRGB();
+		}
+
 		public int size()
 		{
 			// 1 byte, string (2 bytes per character + 2 termination bytes), 7 integers (4 bytes)

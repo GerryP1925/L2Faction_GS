@@ -1,13 +1,6 @@
 package net.sf.l2j.gameserver.data.xml;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
 import net.sf.l2j.commons.data.xml.IXmlReader;
-
 import net.sf.l2j.gameserver.data.SkillTable;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.holder.skillnode.ClanSkillNode;
@@ -15,8 +8,13 @@ import net.sf.l2j.gameserver.model.holder.skillnode.EnchantSkillNode;
 import net.sf.l2j.gameserver.model.holder.skillnode.FishingSkillNode;
 import net.sf.l2j.gameserver.model.pledge.Clan;
 import net.sf.l2j.gameserver.skills.L2Skill;
-
 import org.w3c.dom.Document;
+
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class loads and stores datatypes extending SkillNode, such as {@link FishingSkillNode}, {@link EnchantSkillNode} and {@link ClanSkillNode}.

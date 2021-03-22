@@ -29,5 +29,6 @@ public enum SkillTargetType
 	AREA_SUMMON,
 	ENEMY_SUMMON,
 	OWNER_PET,
-	GROUND
+	GROUND,
+	FACTION_FLAG
 }

@@ -1,19 +1,6 @@
 package net.sf.l2j.gameserver.data;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import net.sf.l2j.commons.data.StatSet;
-
 import net.sf.l2j.gameserver.enums.actors.ClassRace;
 import net.sf.l2j.gameserver.enums.items.ArmorType;
 import net.sf.l2j.gameserver.enums.items.WeaponType;
@@ -25,41 +12,18 @@ import net.sf.l2j.gameserver.model.item.kind.Item;
 import net.sf.l2j.gameserver.skills.ChanceCondition;
 import net.sf.l2j.gameserver.skills.L2Skill;
 import net.sf.l2j.gameserver.skills.basefuncs.FuncTemplate;
-import net.sf.l2j.gameserver.skills.conditions.Condition;
-import net.sf.l2j.gameserver.skills.conditions.ConditionElementSeed;
-import net.sf.l2j.gameserver.skills.conditions.ConditionForceBuff;
-import net.sf.l2j.gameserver.skills.conditions.ConditionGameTime;
-import net.sf.l2j.gameserver.skills.conditions.ConditionLogicAnd;
-import net.sf.l2j.gameserver.skills.conditions.ConditionLogicNot;
-import net.sf.l2j.gameserver.skills.conditions.ConditionLogicOr;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerActiveEffectId;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerActiveSkillId;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerCharges;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerHasCastle;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerHasClanHall;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerHp;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerInvSize;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerIsHero;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerLevel;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerMp;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerPkCount;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerPledgeClass;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerRace;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerSex;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerState;
-import net.sf.l2j.gameserver.skills.conditions.ConditionPlayerWeight;
-import net.sf.l2j.gameserver.skills.conditions.ConditionSkillStats;
-import net.sf.l2j.gameserver.skills.conditions.ConditionTargetActiveSkillId;
-import net.sf.l2j.gameserver.skills.conditions.ConditionTargetHpMinMax;
-import net.sf.l2j.gameserver.skills.conditions.ConditionTargetNpcId;
-import net.sf.l2j.gameserver.skills.conditions.ConditionTargetRaceId;
-import net.sf.l2j.gameserver.skills.conditions.ConditionUsingItemType;
+import net.sf.l2j.gameserver.skills.conditions.*;
 import net.sf.l2j.gameserver.skills.effects.EffectChanceSkillTrigger;
 import net.sf.l2j.gameserver.skills.effects.EffectTemplate;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 abstract class DocumentBase
 {

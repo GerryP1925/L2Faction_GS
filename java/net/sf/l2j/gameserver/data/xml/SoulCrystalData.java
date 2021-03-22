@@ -1,16 +1,14 @@
 package net.sf.l2j.gameserver.data.xml;
 
+import net.sf.l2j.commons.data.StatSet;
+import net.sf.l2j.commons.data.xml.IXmlReader;
+import net.sf.l2j.gameserver.model.soulcrystal.LevelingInfo;
+import net.sf.l2j.gameserver.model.soulcrystal.SoulCrystal;
+import org.w3c.dom.Document;
+
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.sf.l2j.commons.data.StatSet;
-import net.sf.l2j.commons.data.xml.IXmlReader;
-
-import net.sf.l2j.gameserver.model.soulcrystal.LevelingInfo;
-import net.sf.l2j.gameserver.model.soulcrystal.SoulCrystal;
-
-import org.w3c.dom.Document;
 
 /**
  * This class loads and stores following Soul Crystal infos :

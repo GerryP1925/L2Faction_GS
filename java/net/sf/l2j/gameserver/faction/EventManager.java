@@ -10,7 +10,11 @@ import net.sf.l2j.commons.data.StatSet;
 import net.sf.l2j.commons.data.xml.IXmlReader;
 import net.sf.l2j.commons.pool.ThreadPool;
 
+import net.sf.l2j.gameserver.faction.map.DominionMapEvent;
+import net.sf.l2j.gameserver.faction.map.FortressSiegeEvent;
 import net.sf.l2j.gameserver.faction.map.PvPMapEvent;
+import net.sf.l2j.gameserver.faction.mini.LuckyChestsMini;
+import net.sf.l2j.gameserver.faction.mini.SimonSaysMini;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.location.Location;
@@ -48,7 +52,7 @@ public final class EventManager implements IXmlReader
 		if (!_engineOn) // admin has stopped the events
 			return;
 		
-		EventType type = EventType.MAP;
+		EventType type = EventType.MINI;
 		/*
 		if (_lastEventId != 0)
 		{
@@ -77,7 +81,7 @@ public final class EventManager implements IXmlReader
 		
 		for (FactionEvent event : _events.values())
 		{
-			if (event.getType() == type)
+			if (event.getType() == type && event.getId() == 5)
 			{
 				_currentEvent = event;
 				_lastEventId = event.getId();
@@ -108,6 +112,9 @@ public final class EventManager implements IXmlReader
 	
 	public String getEventRemainingMins()
 	{
+		if (_currentEvent.getDuration() == 0)
+			return "---";
+
 		long remainingMillis = _eventStartTime + (_currentEvent.getDuration() * 1000 * 60) - System.currentTimeMillis();
 		String minutes = ""+TimeUnit.MILLISECONDS.toMinutes(remainingMillis);
 		int secondsNum = (int) (TimeUnit.MILLISECONDS.toSeconds(remainingMillis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(remainingMillis)));
@@ -162,10 +169,11 @@ public final class EventManager implements IXmlReader
 			{
 				int duration = parseInteger(attrs, "duration");
 				ArrayList<Location> team1Spawns = new ArrayList<>(),
-					team2Spawns = new ArrayList<>(),
-					flags = new ArrayList<>();
+					team2Spawns = new ArrayList<>();
 				Location radar = new Location(0, 0, 0);
 				StatSet boss = new StatSet();
+				ArrayList<StatSet> flags = new ArrayList<>();
+				ArrayList<Integer> doorIds = new ArrayList<>();
 				forEach(eventNode, "teamSpawns", spawnNode ->
 				{
 					forEach(spawnNode, "spawn", spawn ->
@@ -181,7 +189,13 @@ public final class EventManager implements IXmlReader
 				forEach(eventNode, "flag", flagNode ->
 				{
 					NamedNodeMap flagAttrs = flagNode.getAttributes();
-					flags.add(new Location(parseInteger(flagAttrs, "x"), parseInteger(flagAttrs, "y"), parseInteger(flagAttrs, "z")));
+					StatSet flag = new StatSet();
+					flag.set("id", parseInteger(flagAttrs, "id"));
+					flag.set("x", parseInteger(flagAttrs, "x"));
+					flag.set("y", parseInteger(flagAttrs, "y"));
+					flag.set("z", parseInteger(flagAttrs, "z"));
+					flag.set("r", parseInteger(flagAttrs, "r"));
+					flags.add(flag);
 				});
 				forEach(eventNode, "radar", radarNode ->
 				{
@@ -191,35 +205,78 @@ public final class EventManager implements IXmlReader
 				forEach(eventNode, "boss", bossNode ->
 				{
 					NamedNodeMap bossAttrs = bossNode.getAttributes();
-					boss.put("bossId", parseInteger(bossAttrs, "id"));
-					boss.put("bossX", parseInteger(bossAttrs, "x"));
-					boss.put("bossY", parseInteger(bossAttrs, "y"));
-					boss.put("bossZ", parseInteger(bossAttrs, "z"));
-					boss.put("bossMins", parseInteger(bossAttrs, "time"));
+					boss.put("id", parseInteger(bossAttrs, "id"));
+					boss.put("x", parseInteger(bossAttrs, "x"));
+					boss.put("y", parseInteger(bossAttrs, "y"));
+					boss.put("z", parseInteger(bossAttrs, "z"));
+					boss.put("time", parseInteger(bossAttrs, "time"));
+				});
+				forEach(eventNode, "door", doorNode ->
+				{
+					NamedNodeMap doorAttrs = doorNode.getAttributes();
+					doorIds.add(parseInteger(doorAttrs, "id"));
 				});
 				if (subType.equals("PVP"))
 				{
-					PvPMapEvent event = new PvPMapEvent(id, name, duration, team1Spawns, team2Spawns, radar.getX() == 0 ? null : radar, (int)boss.get("bossId"), new Location((int)boss.get("bossX"), (int)boss.get("bossY"), (int)boss.get("bossZ")), (int)boss.get("bossMins"));
+					PvPMapEvent event = new PvPMapEvent(id, name, duration, team1Spawns, team2Spawns, radar.getX() == 0 ? null : radar, boss);
 					_events.put(id, event);
 				}
 				else if (subType.equals("DOMINION"))
 				{
-					
+					DominionMapEvent event = new DominionMapEvent(id, name, duration, team1Spawns, team2Spawns, radar.getX() == 0 ? null : radar, flags);
+					_events.put(id, event);
 				}
 				else if (subType.equals("SIEGEF"))
 				{
-					
+					FortressSiegeEvent event = new FortressSiegeEvent(id, name, duration, team1Spawns, team2Spawns, radar.getX() == 0 ? null : radar, doorIds, flags.get(0));
+					_events.put(id, event);
 				}
 			}
 			else if (type.equals("MINI"))
 			{
+				Location spawnLoc = new Location(0, 0, 0);
+				forEach(eventNode, "eventSpawn", spawnNode ->
+				{
+					NamedNodeMap spawnAttrs = spawnNode.getAttributes();
+					spawnLoc.setX(parseInteger(spawnAttrs, "x"));
+					spawnLoc.setY(parseInteger(spawnAttrs, "y"));
+					spawnLoc.setZ(parseInteger(spawnAttrs, "z"));
+				});
 				if (subType.equals("SIMONSAYS"))
 				{
-					
+					StatSet simonTemplate = new StatSet();
+					forEach(eventNode, "simon", simonNode ->
+					{
+						NamedNodeMap simonAttrs = simonNode.getAttributes();
+						simonTemplate.set("id", parseInteger(simonAttrs, "id"));
+						simonTemplate.set("x", parseInteger(simonAttrs, "x"));
+						simonTemplate.set("y", parseInteger(simonAttrs, "y"));
+						simonTemplate.set("z", parseInteger(simonAttrs, "z"));
+					});
+					SimonSaysMini event = new SimonSaysMini(id, name, new ArrayList<>(), simonTemplate, spawnLoc);
+					_events.put(id, event);
 				}
 				else if (subType.equals("LUCKYCHESTS"))
 				{
-					
+					int duration = parseInteger(attrs, "duration");
+					StatSet chestInfo = new StatSet();
+					forEach(eventNode, "chest", chestNode ->
+					{
+						NamedNodeMap chestAttrs = chestNode.getAttributes();
+						chestInfo.set("id", parseInteger(chestAttrs, "id"));
+						chestInfo.set("p1x", parseInteger(chestAttrs, "p1x"));
+						chestInfo.set("p1y", parseInteger(chestAttrs, "p1y"));
+						chestInfo.set("p2x", parseInteger(chestAttrs, "p2x"));
+						chestInfo.set("p2y", parseInteger(chestAttrs, "p2y"));
+						chestInfo.set("p3x", parseInteger(chestAttrs, "p3x"));
+						chestInfo.set("p3y", parseInteger(chestAttrs, "p3y"));
+						chestInfo.set("p4x", parseInteger(chestAttrs, "p4x"));
+						chestInfo.set("p4y", parseInteger(chestAttrs, "p4y"));
+						chestInfo.set("z", parseInteger(chestAttrs, "z"));
+						chestInfo.set("amount", parseInteger(chestAttrs, "amount"));
+					});
+					LuckyChestsMini event = new LuckyChestsMini(id, name, duration, new ArrayList<>(), chestInfo, spawnLoc);
+					_events.put(id, event);
 				}
 			}
 			else if (type.equals("FULL"))

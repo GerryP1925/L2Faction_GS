@@ -9,8 +9,12 @@ import net.sf.l2j.gameserver.enums.SiegeSide;
 import net.sf.l2j.gameserver.enums.ZoneId;
 import net.sf.l2j.gameserver.enums.skills.SkillTargetType;
 import net.sf.l2j.gameserver.enums.skills.SkillType;
+import net.sf.l2j.gameserver.faction.EventListeners;
+import net.sf.l2j.gameserver.faction.EventManager;
+import net.sf.l2j.gameserver.faction.map.FortressSiegeEvent;
 import net.sf.l2j.gameserver.handler.ISkillHandler;
 import net.sf.l2j.gameserver.handler.SkillHandler;
+import net.sf.l2j.gameserver.handler.skillhandlers.CaptureFort;
 import net.sf.l2j.gameserver.handler.skillhandlers.StriderSiegeAssault;
 import net.sf.l2j.gameserver.handler.skillhandlers.SummonFriend;
 import net.sf.l2j.gameserver.handler.skillhandlers.TakeCastle;
@@ -215,6 +219,8 @@ public class PlayerCast extends PlayableCast<Player>
 			_actor.destroyItemByItemId("Consume", skill.getItemConsumeId(), skill.getItemConsume(), null, true);
 		
 		_actor.clearRecentFakeDeath();
+
+		EventListeners.onCast(_actor, target, skill);
 	}
 	
 	@Override
@@ -369,7 +375,13 @@ public class PlayerCast extends PlayableCast<Player>
 					return false;
 				
 				break;
-			
+
+			case CAPTURE_FORT:
+				if (!CaptureFort.check(_actor, target))
+					return false;
+
+				break;
+
 			case SIEGE_FLAG:
 				if (!L2SkillSiegeFlag.check(_actor, false))
 					return false;

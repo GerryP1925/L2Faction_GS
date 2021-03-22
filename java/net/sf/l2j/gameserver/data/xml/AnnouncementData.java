@@ -1,14 +1,7 @@
 package net.sf.l2j.gameserver.data.xml;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.nio.file.Path;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import net.sf.l2j.commons.data.xml.IXmlReader;
 import net.sf.l2j.commons.lang.StringUtil;
-
 import net.sf.l2j.gameserver.data.cache.HtmCache;
 import net.sf.l2j.gameserver.enums.SayType;
 import net.sf.l2j.gameserver.model.Announcement;
@@ -16,9 +9,14 @@ import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
 import net.sf.l2j.gameserver.network.serverpackets.NpcHtmlMessage;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.nio.file.Path;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This class loads and stores {@link Announcement}s, the key being dynamically generated on loading.<br>
